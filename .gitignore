@@ -1,0 +1,8 @@
+.vscode/*
+.history/
+.cache/
+
+**/.DS_Store
+
+test
+script

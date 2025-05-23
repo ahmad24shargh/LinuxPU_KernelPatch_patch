@@ -1,0 +1,93 @@
+name: Build kpm patch binaries
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    
+
+jobs:
+  build-patch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0 # fetch full history
+
+      - name: Build patch elf binaries ...
+        run: |
+          set -e
+          sudo apt install -y xxd
+          grep -Rai --exclude-dir=.github . -e 'sukisu' 2>/dev/null
+          exit
+          HOME=${GITHUB_WORKSPACE}
+          mkdir -p ${HOME}/release
+          RELEASE=${HOME}/release
+          TOOLS=${HOME}/tools
+          PATCH=${HOME}/patch
+          KERNEL=${HOME}/kernel
+          #$ANDROID_NDK_HOME/ndk-build
+          cd $TOOLS
+          mkdir -p build/android
+          cd build/android
+          #ls -lR ${ANDROID_NDK_LATEST_HOME}/
+          cmake -DCMAKE_TOOLCHAIN_FILE="${ANDROID_NDK_LATEST_HOME}/build/cmake/android.toolchain.cmake" -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-33 -DANDROID_ABI=arm64-v8a ../..
+          cmake --build .
+          mv kptools kptools-android
+
+          # 构建 Linux 版本
+          cd $TOOLS
+          cd build
+          cmake ..
+          make
+          mv kptools kptools-linux
+
+          cd $KERNEL
+
+          make clean
+          make
+
+          cd $HOME
+
+          export ANDROID_NDK=${ANDROID_NDK_LATEST_HOME}
+          cp -r $TOOLS/build/android/kptools-android $PATCH/res
+          cp -r $TOOLS/build/kptools-linux $PATCH/res
+          cp -r $KERNEL/kpimg $PATCH/res
+
+          cd $PATCH
+          
+          chmod  +x ./encrypt
+          ./encrypt res/kpimg.enc res/decrypt.enc
+          sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
+          ./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
+          xxd -i res/kpimg.enc > include/kpimg_enc.h
+          xxd -i res/kptools-linux > include/kptools_linux.h
+          xxd -i res/kptools-android > include/kptools_android.h
+          
+          # 创建构建目录
+          rm -rf build-android
+          mkdir -p build-android
+          cd build-android
+
+          # 生成编译配置
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-33 -DANDROID_STL=c++_static
+
+          cmake --build .
+          cp -r patch_android $RELEASE
+
+          cd $PATCH
+          rm -rf build-linux || true
+          mkdir -p build-linux
+          cd build-linux
+          cmake .. && make
+          grep -REia --exclude-dir=".github" .. -e 'sukisu' 2>/dev/null
+          mv patch patch_linux
+          cp -r patch_linux $RELEASE
+          
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: patch_linux_android
+          path: release/*
