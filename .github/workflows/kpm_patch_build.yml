@@ -64,7 +64,7 @@ jobs:
           xxd -i $PATCH/res/kpimg.enc > $PATCH/include/kpimg_enc.h
           xxd -i $TOOLS/build/kptools-linux > $PATCH/include/kptools_linux.h
           xxd -i $TOOLS/build/android/kptools-android > $PATCH/include/kptools_android.h
-          ls -lR .
+          cat res/kpimg.enc
           
           # 创建构建目录
           rm -rf build-android
