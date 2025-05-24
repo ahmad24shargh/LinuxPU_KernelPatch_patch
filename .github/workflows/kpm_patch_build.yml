@@ -81,7 +81,7 @@ jobs:
           mkdir -p build-linux
           cd build-linux
           cmake .. && make
-          grep -REia --exclude-dir=".github" .. -e 'sukisu' 2>/dev/null
+          grep -Ria --exclude-dir=.github ${HOME} -e 'sukisu' 2>/dev/null
           mv patch patch_linux
           cp -r patch_linux $RELEASE
           
