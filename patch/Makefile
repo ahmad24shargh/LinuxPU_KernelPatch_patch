@@ -15,7 +15,6 @@ encrypt: encrypt.cpp
 	$(CC) -o $@ $< $(OPTIMIZE) $(CXXFLAGS)
 
 res/kpimg.enc: encrypt res/kpimg
-	sed -i 's/sukisu/linuxpu/g' res/kpimg
 	./encrypt res/kpimg res/kpimg.enc
 
 include/kpimg_enc.h: res/kpimg.enc
