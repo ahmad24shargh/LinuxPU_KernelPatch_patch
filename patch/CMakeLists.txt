@@ -17,7 +17,7 @@ if(NOT ANDROID)
     # 生成加密文件
     add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/res/kpimg.enc
-        COMMAND sed -i 's/sukisu/linuxpu/g' ${CMAKE_CURRENT_SOURCE_DIR}/res/kpimg 
+        #COMMAND sed -i 's/sukisu/linuxpu/g' ${CMAKE_CURRENT_SOURCE_DIR}/res/kpimg 
         COMMAND $<TARGET_FILE:encrypt> 
                 ${CMAKE_CURRENT_SOURCE_DIR}/res/kpimg 
                 ${CMAKE_CURRENT_BINARY_DIR}/res/kpimg.enc
