@@ -61,10 +61,9 @@ jobs:
           ./encrypt $KERNEL/kpimg $PATCH/res/kpimg.enc
           #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
           #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
-          xxd -i $PATCH/res/kpimg.enc > $PATCH/include/kpimg_enc.h
-          xxd -i $TOOLS/build/kptools-linux > $PATCH/include/kptools_linux.h
-          xxd -i $TOOLS/build/android/kptools-android > $PATCH/include/kptools_android.h
-          cat include/kpimg_enc.h
+          xxd -i res/kpimg.enc > include/kpimg_enc.h
+          xxd -i res/kptools-linux > include/kptools_linux.h
+          xxd -i res/kptools-android > include/kptools_android.h
           
           # 创建构建目录
           rm -rf build-android
