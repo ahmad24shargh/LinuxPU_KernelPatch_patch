@@ -19,7 +19,7 @@ jobs:
         run: |
           set -e
           sudo apt install -y xxd
-          grep -Rai --exclude-dir=.github . -e 'sukisu' 2>/dev/null
+          #grep -Rai --exclude-dir=.github . -e 'sukisu' 2>/dev/null
           HOME=${GITHUB_WORKSPACE}
           mkdir -p ${HOME}/release
           RELEASE=${HOME}/release
