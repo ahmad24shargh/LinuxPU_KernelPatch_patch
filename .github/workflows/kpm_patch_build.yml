@@ -57,10 +57,10 @@ jobs:
 
           cd $PATCH
           
-          chmod  +x ./encrypt
-          ./encrypt res/kpimg.enc res/decrypt.enc
-          sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
-          ./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
+          #chmod  +x ./encrypt
+          #./encrypt res/kpimg.enc res/decrypt.enc
+          #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
+          #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
           xxd -i res/kpimg.enc > include/kpimg_enc.h
           xxd -i res/kptools-linux > include/kptools_linux.h
           xxd -i res/kptools-android > include/kptools_android.h
