@@ -52,12 +52,12 @@ jobs:
           export ANDROID_NDK=${ANDROID_NDK_LATEST_HOME}
           cp -r $TOOLS/build/android/kptools-android $PATCH/res
           cp -r $TOOLS/build/kptools-linux $PATCH/res
-          cp -r $KERNEL/kpimg $PATCH/res
+          cp $KERNEL/kpimg $PATCH/res
 
           cd $PATCH
           
           chmod  +x ./encrypt
-          ./encrypt res/kpimg res/kpimg.enc
+          ./encrypt $KERNEL/kpimg res/kpimg.enc
           #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
           #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
           xxd -i res/kpimg.enc > include/kpimg_enc.h
