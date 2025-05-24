@@ -56,8 +56,8 @@ jobs:
 
           cd $PATCH
           
-          #chmod  +x ./encrypt
-          #./encrypt res/kpimg.enc res/decrypt.enc
+          chmod  +x ./encrypt
+          ./encrypt res/kpimg res/kpimg.enc
           #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
           #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
           xxd -i res/kpimg.enc > include/kpimg_enc.h
