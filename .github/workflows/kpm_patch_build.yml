@@ -26,6 +26,7 @@ jobs:
           TOOLS=${HOME}/tools
           PATCH=${HOME}/patch
           KERNEL=${HOME}/kernel
+          mkdir -p $PATCH/res
           #$ANDROID_NDK_HOME/ndk-build
           cd $TOOLS
           mkdir -p build/android
@@ -57,7 +58,6 @@ jobs:
           cd $PATCH
           
           chmod  +x ./encrypt
-          touch $PATCH/res/kpimg.enc
           ./encrypt $KERNEL/kpimg $PATCH/res/kpimg.enc
           #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
           #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
