@@ -77,6 +77,7 @@ jobs:
           grep -Ria --exclude-dir={.git*} ${HOME} -e 'sukisu'
           mv patch patch_linux
           cp -r patch_linux $RELEASE
+          export TARGET_COMPILE="${TARGET_COMPILE}/"
           cd ${HOME}/kpms
           cd demo-hello
           make
