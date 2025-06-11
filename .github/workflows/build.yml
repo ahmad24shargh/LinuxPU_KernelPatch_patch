@@ -25,6 +25,7 @@ jobs:
           RELEASE=${HOME}/release
           TOOLS=${HOME}/tools
           PATCH=${HOME}/patch
+          mkdir -p ${PATCH}/res
           KERNEL=${HOME}/kernel
           export TARGET_COMPILE=${ANDROID_NDK_LATEST_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
           #mkdir -p $PATCH/res
@@ -53,7 +54,7 @@ jobs:
           cd $PATCH
           
           chmod  +x ./encrypt
-          #./encrypt $KERNEL/kpimg $PATCH/res/kpimg.enc
+          ./encrypt $KERNEL/kpimg $PATCH/res/kpimg.enc
           #sed -i 's/sukisu/linuxpu/g' res/decrypt.enc
           #./encrypt res/decrypt.enc res/kpimg.enc;rm -f res/decrypt.enc
           xxd -i res/kpimg.enc > include/kpimg_enc.h
