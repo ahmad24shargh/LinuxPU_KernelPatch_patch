@@ -40,7 +40,7 @@ int local_strcmp(const char *s1, const char *s2)
     return d;
 }
 
-unsigned long (*sukisu_compact_find_symbol)(const char* name);
+unsigned long (*linuxpu_compact_find_symbol)(const char* name);
 
 unsigned long symbol_lookup_name(const char *name)
 {
@@ -52,8 +52,8 @@ unsigned long symbol_lookup_name(const char *name)
         }
     }
 
-    if(sukisu_compact_find_symbol) {
-        return sukisu_compact_find_symbol(name);
+    if(linuxpu_compact_find_symbol) {
+        return linuxpu_compact_find_symbol(name);
     }
 
     return 0;
@@ -70,5 +70,5 @@ void symbol_init()
         symbol->hash = sym_hash(symbol->name);
     }
 
-    sukisu_compact_find_symbol = (typeof(sukisu_compact_find_symbol)) kallsyms_lookup_name("sukisu_compact_find_symbol");
+    linuxpu_compact_find_symbol = (typeof(linuxpu_compact_find_symbol)) kallsyms_lookup_name("linuxpu_compact_find_symbol");
 }
